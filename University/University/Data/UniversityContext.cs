@@ -13,7 +13,7 @@ namespace University.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
 
-        public UniversityContext()
+        public UniversityContext()  
         {
 
         }
