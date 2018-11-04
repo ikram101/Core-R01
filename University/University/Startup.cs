@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using University.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace University
 {
@@ -31,7 +32,8 @@ namespace University
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<UniversityContext>();
+            services.AddDbContext<UniversityContext>(options=>
+            options.UseSqlServer(Configuration.GetConnectionString("UniversityDb")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
