@@ -22,17 +22,28 @@ namespace CodeFirstLevelOne.Controllers
         // GET: Students
         public async Task<IActionResult> Index(string sortOrder)
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+           var a=  ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+           var b= ViewData["DateSortParm"] = sortOrder =="date" ? "Date_desc" : "date";
 
             var students = from s in _context.Students select s;
 
-            if( !String.IsNullOrEmpty(sortOrder) || sortOrder == "name_desc")
+            switch (sortOrder)
             {
-                students = students.OrderByDescending(s=>s.LastName);
-            }
-            else
-            {
-                students = students.OrderBy(s => s.LastName);
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.LastName);
+                    break;
+
+                case "Date_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+
+                case "date":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
+
+                default:
+                    students = students.OrderBy(s => s.LastName);
+                    break;
 
             }
 
