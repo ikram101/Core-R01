@@ -20,9 +20,24 @@ namespace CodeFirstLevelOne.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Students.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            var students = from s in _context.Students select s;
+
+            if( !String.IsNullOrEmpty(sortOrder) || sortOrder == "name_desc")
+            {
+                students = students.OrderByDescending(s=>s.LastName);
+            }
+            else
+            {
+                students = students.OrderBy(s => s.LastName);
+
+            }
+
+
+            return View(await students.ToListAsync());
         }
 
         // GET: Students/Details/5
