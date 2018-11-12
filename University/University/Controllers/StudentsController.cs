@@ -20,10 +20,13 @@ namespace CodeFirstLevelOne.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder,string searchTerm)
         {
            var a=  ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
            var b= ViewData["DateSortParm"] = sortOrder =="date" ? "Date_desc" : "date";
+
+            ViewData["SearchTerm"] = searchTerm;
+            ViewBag.strSearchTerm = searchTerm;
 
             var students = from s in _context.Students select s;
 
