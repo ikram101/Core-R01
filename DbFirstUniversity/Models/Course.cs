@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace DbFirstUniversity.Models
 {
+    //Heloo
     public partial class Course
     {
         public Course()
