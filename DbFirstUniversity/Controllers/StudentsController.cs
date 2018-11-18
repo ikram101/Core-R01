@@ -6,34 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DbFirstUniversity.Models;
+using DbFirstUniversity.Data;
 
 namespace DbFirstUniversity.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly UniversityContext _context;
-
+        private readonly UnitOfWork _context;
+      
         public StudentsController(UniversityContext context)
         {
-            _context = context;
+            _context = new UnitOfWork(new UniversityContext());
         }
 
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Student.ToListAsync());
+            return View( _context.Students.GetAll());
         }
 
         // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = _context.Students.GetById(id);
+                 
             if (student == null)
             {
                 return NotFound();
@@ -57,22 +58,22 @@ namespace DbFirstUniversity.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                _context.Students.Add(student);
+                 
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
         }
 
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
+            var student =  _context.Student.GetById(id);
             if (student == null)
             {
                 return NotFound();
@@ -96,8 +97,8 @@ namespace DbFirstUniversity.Controllers
             {
                 try
                 {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(student);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,12 +124,12 @@ namespace DbFirstUniversity.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+            var student =  _context.Student;
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (student == null)
+            //{
+            //    return NotFound();
+            //}
 
             return View(student);
         }
@@ -138,15 +139,15 @@ namespace DbFirstUniversity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
-            await _context.SaveChangesAsync();
+            //var student = await _context.Student.FindAsync(id);
+            //_context.Student.Remove(student);
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _context.Student.Any(e => e.Id == id);
+            return true;// _context.Student.Any(e => e.Id == id);
         }
     }
 }
