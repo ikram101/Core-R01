@@ -16,7 +16,7 @@ namespace DbFirstUniversity.Data
         public int Id { get; protected set; }
     }
 
-    public interface IRepository<T> where T : EntityBase
+    public interface IRepository<T> where T : class 
     {
         T GetById(int id);
         IEnumerable<T> GetAll();
@@ -25,7 +25,7 @@ namespace DbFirstUniversity.Data
         void Remove(T entity);
     }
 
-    public class Repository<T> : IRepository<T> where T : EntityBase
+    public class Repository<T> : IRepository<T> where T :class
     {
 
         protected readonly DbContext _context;
@@ -57,7 +57,6 @@ namespace DbFirstUniversity.Data
         public void Remove(T entity)
         {
              _context.Set<T>().Remove(entity);
-
         }
     }
 
