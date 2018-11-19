@@ -8,6 +8,7 @@ using Maple.Core.Repositories;
 
 namespace Maple.Core.Repositories
 {
+    //Comments just for reverting demo
     public interface IStudentRepository: IRepository<Student>
     {
         Student GetClassToper();
