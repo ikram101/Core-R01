@@ -10,7 +10,7 @@ namespace DbFirstUniversity.Data
 {
     public interface IUnitOfWork : IDisposable
     {
-        IStudentRepository Student { get; }
+        IStudentRepository Students { get; }
         int Save();
     }
 
@@ -25,13 +25,10 @@ namespace DbFirstUniversity.Data
             _context = context;
             Students = new StudentRepository(_context);
         }
-
-        public IStudentRepository Student => throw new NotImplementedException();
-
+        
         public int Save()
         {
            return _context.SaveChanges();
-
         }
 
         public void Dispose()
