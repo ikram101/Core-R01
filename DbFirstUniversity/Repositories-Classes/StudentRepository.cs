@@ -4,21 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DbFirstUniversity.Models;
-namespace DbFirstUniversity.Data
-{
-    public interface IStudentRepository : IRepository<Student>
-    {
-        IEnumerable<Student> GetTopTenStudents();
-        Student GetClassToper();
-    }
+using DbFirstUniversity.Repositories;
+using Maple.Core.Repositories;
 
+namespace DbFirstUniversity.Repositories
+{
+     
     public class StudentRepository : Repository<Student>, IStudentRepository
     {
-
-        public UniversityContext UniversityContext
-        {
-            get { return _context as UniversityContext; }
-        }
 
         public StudentRepository(UniversityContext context) : base(context)
         {
@@ -30,9 +23,10 @@ namespace DbFirstUniversity.Data
             return UniversityContext.Student.OrderByDescending(c=>c.Id).Single();
         }
 
-        public IEnumerable<Student> GetTopTenStudents()
+        public UniversityContext UniversityContext
         {
-            throw new NotImplementedException();
+            get { return Context as UniversityContext; }
         }
+
     }
 }

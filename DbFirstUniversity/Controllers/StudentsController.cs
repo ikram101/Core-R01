@@ -13,7 +13,7 @@ namespace DbFirstUniversity.Controllers
     public class StudentsController : Controller
     {
         private readonly UnitOfWork _context;
-      
+
         public StudentsController(UniversityContext context)
         {
             _context = new UnitOfWork(new UniversityContext());
@@ -22,7 +22,7 @@ namespace DbFirstUniversity.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View( _context.Students.GetAll());
+            return View(_context.Students.GetAll());
         }
 
         // GET: Students/Details/5
@@ -33,8 +33,8 @@ namespace DbFirstUniversity.Controllers
                 return NotFound();
             }
 
-            var student = _context.Students.GetById(id);
-                 
+            var student = _context.Students.Get(id);
+
             if (student == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace DbFirstUniversity.Controllers
             if (ModelState.IsValid)
             {
                 _context.Students.Add(student);
-                 
+                _context.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
@@ -73,12 +73,12 @@ namespace DbFirstUniversity.Controllers
                 return NotFound();
             }
 
-            var student =  _context.Student.GetById(id);
-            if (student == null)
+            var student1 = _context.Students.Get(id);
+            if (student1 == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(student1);
         }
 
         // POST: Students/Edit/5
@@ -97,8 +97,11 @@ namespace DbFirstUniversity.Controllers
             {
                 try
                 {
-                    //_context.Update(student);
-                    //await _context.SaveChangesAsync();
+                    var studentToUpdate = _context.Students.Get(id);
+
+                    studentToUpdate.FirstMidName = student.FirstMidName;
+                    studentToUpdate.LastName = student.LastName;
+                    _context.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,19 +120,19 @@ namespace DbFirstUniversity.Controllers
         }
 
         // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+             
+            var student = _context.Students.Get(id);
 
-            var student =  _context.Student;
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (student == null)
-            //{
-            //    return NotFound();
-            //}
+            if (student == null)
+            {
+                return NotFound();
+            }
 
             return View(student);
         }
@@ -139,15 +142,28 @@ namespace DbFirstUniversity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //var student = await _context.Student.FindAsync(id);
-            //_context.Student.Remove(student);
-            //await _context.SaveChangesAsync();
+            var student = _context.Students.Get(id);
+
+            if (student != null)
+            {
+                _context.Students.Remove(student);
+                _context.Save();
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return true;// _context.Student.Any(e => e.Id == id);
+            var exists = _context.Students.SingleOrDefault(e => e.Id == id);
+
+            if (exists != null)
+            {
+                return true;
+            }
+
+            return false;
+
         }
     }
 }
