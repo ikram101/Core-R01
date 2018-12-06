@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbFirst2University", "DbFirst2University\DbFirst2University.csproj", "{6DF9ED31-180E-4EBF-9036-9302290DC17D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbFirst2University", "DbFirst2University\DbFirst2University.csproj", "{6DF9ED31-180E-4EBF-9036-9302290DC17D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbFirst2UniversityTests", "DbFirst2UniversityTests\DbFirst2UniversityTests.csproj", "{4A416957-2C0F-461B-942A-D06473EAE67C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6DF9ED31-180E-4EBF-9036-9302290DC17D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DF9ED31-180E-4EBF-9036-9302290DC17D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DF9ED31-180E-4EBF-9036-9302290DC17D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A416957-2C0F-461B-942A-D06473EAE67C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A416957-2C0F-461B-942A-D06473EAE67C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A416957-2C0F-461B-942A-D06473EAE67C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A416957-2C0F-461B-942A-D06473EAE67C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
