@@ -19,7 +19,7 @@ namespace DbFirstUniversity.Tests
 
             ViewResult result = homeController.Index() as ViewResult;
 
-            Assert.AreEqual("Hello",result.ViewData["Hello"]);
+            Assert.AreNotEqual("Hello",result.ViewData["Hello"]);
 
         }
 
